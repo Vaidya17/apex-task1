@@ -1,0 +1,170 @@
+APEXPLANET CYBERSECURITY AND ETHICAL HACKING INTERNSHIP
+
+TASK 1 NOTES
+
+FOUNDATION AND ENVIRONMENT SETUP
+
+
+CYBERSECURITY LAB
+
+For the practical part of Task 1, I created a small cybersecurity lab using Oracle VirtualBox.
+
+The lab has two machines:
+
+Kali Linux
+Used as the attacker and security testing machine.
+
+Metasploitable 2
+Used as the intentionally vulnerable target machine.
+
+Both machines are connected using a Host Only network so that they can communicate inside the lab.
+
+
+LAB NETWORK
+
+Network: 192.168.56.0/24
+
+Kali Linux: 192.168.56.101
+
+Metasploitable 2: 192.168.56.102
+
+Subnet Mask: 255.255.255.0
+
+The Host Only network keeps the target machine inside the controlled virtual lab.
+
+
+KALI LINUX
+
+Kali Linux was imported into VirtualBox using the pre built VirtualBox image.
+
+The main network interface is eth0.
+
+Command used to check the network configuration:
+
+ip addr
+
+Kali received the IP address:
+
+192.168.56.101/24
+
+
+METASPLOITABLE 2
+
+Metasploitable 2 is an intentionally vulnerable Linux machine used as the target in the lab.
+
+It was imported into VirtualBox using its existing virtual disk.
+
+Default login used:
+
+Username: msfadmin
+Password: msfadmin
+
+Command used to check the network configuration:
+
+ifconfig
+
+Metasploitable received:
+
+192.168.56.102
+
+
+CONNECTIVITY TEST
+
+To check whether Kali could communicate with Metasploitable, I used:
+
+ping -c 4 192.168.56.102
+
+Result:
+
+4 packets transmitted
+4 packets received
+0 percent packet loss
+
+This confirmed that both machines could communicate through the Host Only network.
+
+
+NMAP
+
+Nmap is used for network discovery and finding open ports and services.
+
+I ran the first scan from Kali against Metasploitable:
+
+nmap 192.168.56.102
+
+The target was detected as up and multiple open ports were found.
+
+Some of the services discovered included:
+
+FTP
+SSH
+Telnet
+SMTP
+DNS
+HTTP
+SMB
+MySQL
+PostgreSQL
+VNC
+X11
+IRC
+
+This gave me an initial idea of the services running on the target.
+
+
+WIRESHARK
+
+Wireshark was used to capture network traffic between Kali and Metasploitable.
+
+I selected the eth0 interface for capturing traffic.
+
+To generate traffic, I pinged the Metasploitable machine:
+
+ping -c 4 192.168.56.102
+
+I then used this Wireshark filter:
+
+icmp
+
+The capture showed ICMP Echo Request packets going from Kali to Metasploitable and Echo Reply packets coming back.
+
+This was my first packet capture in the lab.
+
+
+TOOLS USED
+
+Oracle VirtualBox
+Kali Linux
+Metasploitable 2
+Nmap
+Wireshark
+Ping
+
+
+IMPORTANT COMMANDS FROM TASK 1
+
+ip addr
+Used to check network interfaces and IP addresses.
+
+ifconfig
+Used to check network configuration on Metasploitable.
+
+ping -c 4 192.168.56.102
+Used to test connectivity between Kali and Metasploitable.
+
+nmap 192.168.56.102
+Used to scan the target for open ports and services.
+
+Wireshark filter:
+
+icmp
+
+Used to view ICMP packets.
+
+
+WHAT I LEARNED
+
+The main practical part of Task 1 was setting up an isolated attacker and target environment.
+
+I learned how to connect two virtual machines using a Host Only network, verify their IP addresses, test connectivity, perform a basic Nmap scan and capture the resulting network traffic using Wireshark.
+
+The lab is now ready for the next stages of cybersecurity testing.

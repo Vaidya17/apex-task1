@@ -1,0 +1,266 @@
+LINUX CHEAT SHEET
+1. BASIC LINUX COMMANDS
+
+pwd
+Shows the current working directory.
+
+ls
+Lists files and directories.
+
+ls -la
+Lists all files, including hidden files.
+
+cd
+Changes the current directory.
+
+Example:
+cd /home/kali
+
+cd ..
+Moves to the parent directory.
+
+mkdir
+Creates a directory.
+
+Example:
+mkdir lab
+
+touch
+Creates an empty file.
+
+Example:
+touch notes.txt
+
+cp
+Copies files or directories.
+
+Example:
+cp file.txt backup.txt
+
+mv
+Moves or renames files.
+
+Example:
+mv old.txt new.txt
+
+rm
+Removes a file.
+
+Example:
+rm file.txt
+
+clear
+Clears the terminal screen.
+
+2. VIEWING AND MANAGING FILES
+
+cat
+Displays the contents of a file.
+
+Example:
+cat notes.txt
+
+less
+Views a file page by page.
+
+head
+Displays the beginning of a file.
+
+tail
+Displays the end of a file.
+
+file
+Identifies the type of a file.
+
+Example:
+file notes.txt
+
+find
+Searches for files and directories.
+
+Example:
+find /home -name notes.txt
+
+3. SYSTEM INFORMATION
+
+whoami
+Shows the current user.
+
+hostname
+Displays the system hostname.
+
+uname -a
+Displays system and kernel information.
+
+date
+Displays the current date and time.
+
+uptime
+Shows system uptime and load.
+
+df -h
+Shows disk space usage.
+
+free -h
+Shows memory usage.
+
+4. NETWORKING COMMANDS
+
+ip addr
+Displays network interfaces and IP addresses.
+
+ip route
+Displays the routing table.
+
+ping
+Tests network connectivity.
+
+Example:
+ping 192.168.56.102
+
+ping -c 4
+Sends a specified number of ping packets.
+
+Example:
+ping -c 4 192.168.56.102
+
+ss
+Displays network connections and listening sockets.
+
+Example:
+ss -tuln
+
+hostname -I
+Displays assigned IP addresses.
+
+5. FILE PERMISSIONS
+
+Linux uses permissions to control access to files and directories.
+
+r means Read.
+
+w means Write.
+
+x means Execute.
+
+The three permission categories are User, Group and Others.
+
+ls -l
+Displays file permissions.
+
+chmod
+Changes file permissions.
+
+Example:
+chmod +x script.sh
+
+This makes a script executable.
+
+6. USER AND PRIVILEGE COMMANDS
+
+whoami
+Shows the current user.
+
+sudo command
+Executes a command with elevated privileges.
+
+Example:
+sudo apt update
+
+7. PACKAGE MANAGEMENT
+
+Kali Linux uses the APT package manager.
+
+sudo apt update
+Updates package information.
+
+sudo apt upgrade
+Upgrades installed packages.
+
+sudo apt install package
+Installs a package.
+
+Example:
+sudo apt install wireshark
+
+8. PROCESS MANAGEMENT
+
+ps
+Displays running processes.
+
+ps aux
+Displays detailed information about running processes.
+
+top
+Displays active processes and system resource usage.
+
+kill PID
+Terminates a process using its process ID.
+
+9. SECURITY AND NETWORKING TOOLS
+
+i)NMAP
+
+Nmap is used for network discovery and service enumeration.
+
+Basic scan:
+
+nmap 192.168.56.102
+
+In Task 1, Nmap was used to scan the Metasploitable 2 target and identify open ports and services.
+
+ii)WIRESHARK
+
+Wireshark is a network protocol analyzer used to capture and inspect network packets.
+
+The display filter used in Task 1 was:
+
+icmp
+
+This filter was used to display ICMP traffic between Kali Linux and Metasploitable 2.
+
+10. IMPORTANT LINUX SHORTCUTS
+
+Ctrl + C
+Stops the current command or process.
+
+Ctrl + L
+Clears the terminal screen.
+
+Ctrl + D
+Exits the current shell or session.
+
+Tab
+Automatically completes commands and paths.
+
+Up Arrow and Down Arrow
+Navigate through command history.
+
+11. TASK 1 COMMANDS USED
+
+i)KALI LINUX
+
+ip addr
+
+Used to verify the Kali Linux network interface and IP address.
+
+ii)CONNECTIVITY TEST
+
+ping -c 4 192.168.56.102
+
+Used to verify communication between Kali Linux and Metasploitable 2.
+
+iii)NETWORK SCANNING
+
+nmap 192.168.56.102
+
+Used to identify open ports and services on the Metasploitable 2 target.
+
+iv)WIRESHARK
+
+icmp
+
+Used as a display filter to isolate ICMP packets during packet analysis.
+
+
+
