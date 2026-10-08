@@ -1,0 +1,157 @@
+APEXPLANET INTERNSHIP — TASK 2 NOTES
+NMAP SCAN / NETWORK & SERVICE ENUMERATION
+
+Basic setup
+- Virtualization: Oracle VirtualBox
+- Attacker: Kali Linux
+- Target: Metasploitable 2
+- Network: Host-Only Adapter
+- Kali IP: 192.168.56.101
+- Target IP: 192.168.56.102
+- Tool: Nmap
+- Testing was performed in the isolated lab created during Task 1.
+
+--------------------------------------------------
+1. TCP PORT ENUMERATION
+--------------------------------------------------
+
+Command used:
+
+nmap -Pn 192.168.56.102
+
+- Target was active.
+- 23 TCP ports were identified as open.
+- 977 TCP ports were reported as closed.
+- A wide range of services were exposed.
+
+Important service categories noticed:
+- FTP
+- SSH
+- Telnet
+- SMTP
+- DNS
+- HTTP
+- SMB
+- NFS
+- MySQL
+- PostgreSQL
+- VNC
+- X11
+- IRC
+- AJP13
+
+Observation:
+- The large number of exposed services showed that the target had a broad network-facing attack surface.
+- This scan gave the initial service map of Metasploitable 2.
+
+
+
+--------------------------------------------------
+2. SERVICE AND VERSION DETECTION
+--------------------------------------------------
+
+Command used:
+
+nmap -Pn -sV 192.168.56.102
+
+Important versions identified:
+- FTP: vsftpd 2.3.4
+- SSH: OpenSSH 4.7p1
+- DNS: ISC BIND 9.4.2
+- HTTP: Apache httpd 2.2.8
+- SMB: Samba
+- MySQL: 5.0.51a
+- PostgreSQL: 8.3.x
+- VNC: Protocol 3.3
+- IRC: UnrealIRCd
+- AJP13: Apache Jserv
+- HTTP: Apache Tomcat/Coyote
+
+Observation:
+- Version detection gave more detail than the basic port scan.
+- The identified versions can be researched for known security issues.
+- These results were useful for deciding which services needed further vulnerability assessment.
+- The Nmap results also provided input for the later OpenVAS assessment.
+
+
+
+--------------------------------------------------
+3. OPERATING SYSTEM DETECTION
+--------------------------------------------------
+
+- Nmap identified the target as a Linux 2.6.x system.
+- The detailed result indicated a Linux 2.6.9–2.6.33 range.
+
+Observation:
+- OS detection helped identify the platform running the target.
+- This information can be useful when planning further security assessment.
+
+
+
+--------------------------------------------------
+4. UDP ENUMERATION
+--------------------------------------------------
+
+Command used:
+
+sudo nmap -Pn -sU --top-ports 20 192.168.56.102
+
+- The scan checked the most common 20 UDP ports.
+- Several ports were shown as open or filtered.
+- Services/protocols associated with DNS, DHCP, TFTP, NTP, NetBIOS, SNMP, routing, IPP and other protocols were identified.
+
+Important point:
+- open|filtered means Nmap could not definitively determine whether the port was open or being filtered by packet filtering.
+
+Observation:
+- UDP enumeration expanded the assessment beyond TCP.
+- It showed that the target's network exposure was not limited to TCP services.
+
+
+--------------------------------------------------
+5. DETAILED OBSERVATIONS
+--------------------------------------------------
+
+The Nmap assessment gave a multi-layered view of Metasploitable 2:
+
+- 23 open TCP ports were identified.
+- Service and version detection identified applications running on those ports.
+- Exposed services included remote access, file transfer, web, file sharing, database and remote graphical services.
+- UDP scanning provided additional information about network exposure.
+- The identified software versions provide useful information for vulnerability research.
+
+Important:
+- Nmap enumeration alone does NOT confirm that a service is vulnerable.
+- The discovered services and versions were intended for further assessment using OpenVAS.
+
+--------------------------------------------------
+6. RESULTS
+--------------------------------------------------
+
+TCP port enumeration:
+- 23 open TCP ports identified
+
+Service detection:
+- Successfully completed
+
+Version detection:
+- Successfully completed
+
+OS detection:
+- Linux 2.6.x identified
+
+UDP enumeration:
+- Successfully completed
+
+Attack-surface mapping:
+- Successfully completed
+
+
+--------------------------------------------------
+8. FINAL OBSERVATION
+--------------------------------------------------
+
+- Nmap successfully mapped the network exposure of Metasploitable 2.
+- The scan identified exposed TCP and UDP services, application/version information and operating-system characteristics.
+- The resulting service map provided the baseline for the next stage of the assessment.
+- OpenVAS was planned as the next step to identify and analyze vulnerabilities associated with the discovered services.

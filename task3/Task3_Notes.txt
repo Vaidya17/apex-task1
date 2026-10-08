@@ -1,0 +1,137 @@
+APEXPLANET INTERNSHIP — TASK 3 NOTES
+WEB APPLICATION SECURITY TESTING / DVWA
+
+Basic setup
+- Target: DVWA (Damn Vulnerable Web Application)
+- URL: http://127.0.0.1/DVWA/
+- OS: Kali Linux
+- Web server: Apache
+- Browser: Firefox
+- Testing was done only on the local DVWA lab.
+
+--------------------------------------------------
+1. SQL INJECTION
+--------------------------------------------------
+
+First checked the normal response using:
+
+1
+
+- Normal input returned the expected user information.
+- Used this as the baseline.
+
+Then tested:
+
+1' OR '1'='1
+
+- Application returned multiple records.
+- This showed that the input was being directly included in the SQL query.
+
+Also tested a UNION-based payload:
+
+1' UNION SELECT user,password FROM users -- 
+
+- Usernames and password hashes were exposed.
+- This showed that SQL Injection could be used to access sensitive database information.
+
+
+Main mitigation:
+- Use prepared statements / parameterized queries.
+- Validate input on the server side.
+- Use least-privilege database accounts.
+
+--------------------------------------------------
+2. STORED XSS
+--------------------------------------------------
+
+Payload used:
+
+<script>alert('XSS')</script>
+
+- Entered the payload in the DVWA Stored XSS input.
+- The application stored the input.
+- When the stored content was displayed, the JavaScript executed.
+- The browser showed the XSS alert.
+
+Impact:
+- Attacker-controlled JavaScript can execute for users viewing the affected content.
+
+
+
+Main mitigation:
+- Validate and sanitize input.
+- Encode output according to its context.
+- Use Content Security Policy (CSP).
+- Do not render user input as executable HTML/JavaScript.
+
+--------------------------------------------------
+3. REFLECTED XSS
+--------------------------------------------------
+
+Payload used:
+
+<script>alert('XSS')</script>
+
+- Supplied the payload through the application's request parameter.
+- The input was reflected in the response.
+- JavaScript executed immediately in the browser.
+- XSS alert was displayed.
+
+Difference noticed:
+- Stored XSS is saved by the application and executed when the stored content is viewed.
+- Reflected XSS is returned as part of the immediate response.
+
+
+Main mitigation:
+- Server-side input validation.
+- Context-appropriate output encoding.
+- Do not insert request parameters directly into executable HTML/JavaScript contexts.
+
+--------------------------------------------------
+4. CSRF
+--------------------------------------------------
+
+- Tested the DVWA password-change functionality while logged in.
+- Used a crafted request to trigger the password-change operation.
+- The operation succeeded and showed:
+
+Password Changed.
+
+- This confirmed that the tested state-changing request did not properly verify the origin of the request.
+
+Main mitigation:
+- Use unpredictable, session-bound CSRF tokens.
+- Validate the token on the server.
+- Use appropriate SameSite cookie settings.
+- Maintain secure session management.
+
+--------------------------------------------------
+5. FINDINGS SUMMARY
+--------------------------------------------------
+
+SQL Injection
+- Severity: High
+- Multiple database records returned.
+- Usernames and password hashes exposed.
+
+Stored XSS
+- Severity: Medium
+- Stored JavaScript executed in the browser.
+
+Reflected XSS
+- Severity: Medium
+- Reflected JavaScript executed in the browser.
+
+CSRF
+- Severity: Medium
+- Password-change request was successfully triggered.
+
+--------------------------------------------------
+7. FINAL OBSERVATION
+--------------------------------------------------
+
+- DVWA was useful for testing common web application vulnerabilities in a controlled environment.
+- SQL Injection showed the importance of parameterized database queries.
+- XSS showed the importance of input handling and output encoding.
+- CSRF showed the need to protect authenticated state-changing requests.
+- All testing was performed locally against the intentionally vulnerable DVWA application.
