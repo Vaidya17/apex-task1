@@ -1,0 +1,20 @@
+INCIDENT RESPONSE - CONTAINMENT
+
+Incident:
+SQL Injection attack detected against the DVWA application.
+
+Detection Evidence:
+Apache access logs recorded a request containing the SQL Injection payload:
+1' OR '1'='1
+
+Containment Action:
+The affected DVWA SQL Injection endpoint was isolated for the simulated
+incident-response exercise. Further malicious requests were stopped while
+the application was assessed.
+
+Source IP:
+127.0.0.1 (local controlled lab)
+
+Note:
+The source IP was not blocked at the firewall because it represents the
+local testing machine required to access the DVWA application.

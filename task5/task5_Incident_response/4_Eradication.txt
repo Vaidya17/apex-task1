@@ -1,0 +1,21 @@
+INCIDENT RESPONSE - ERADICATION
+
+Incident:
+SQL Injection vulnerability identified in the DVWA application.
+
+Root Cause:
+The application accepts user-controlled input and processes it in a way
+that allows SQL Injection.
+
+Eradication Action:
+The vulnerable SQL query implementation was identified for remediation.
+The SQL Injection vulnerability should be removed by replacing dynamic SQL
+construction with prepared statements and parameterized queries.
+
+Additional Action:
+Input validation and appropriate security controls should be applied to
+prevent malicious SQL syntax from being processed as executable queries.
+
+Verification:
+The SQL Injection test should be repeated after remediation to verify that
+the malicious input is no longer interpreted as SQL commands.

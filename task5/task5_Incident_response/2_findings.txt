@@ -1,0 +1,27 @@
+DVWA WEB APPLICATION SECURITY ASSESSMENT
+FINDINGS
+
+Finding 1: SQL Injection
+Severity: High
+Evidence: SQL Injection returned multiple database records and exposed usernames/password hashes.
+Mitigation: Use prepared statements/parameterized queries and validate input.
+
+Finding 2: Stored XSS
+Severity: Medium
+Evidence: Injected JavaScript was stored and executed by the application.
+Mitigation: Validate and sanitize input, encode output, and use CSP.
+
+Finding 3: Reflected XSS
+Severity: Medium
+Evidence: Injected JavaScript was reflected through the application and executed in the browser.
+Mitigation: Validate input and apply context-appropriate output encoding.
+
+Finding 4: CSRF
+Severity: Medium
+Evidence: A crafted request successfully triggered a password-change operation while the user was authenticated.
+Mitigation: Use unpredictable CSRF tokens for state-changing requests and appropriate cookie protections.
+
+Testing Environment:
+Kali Linux
+DVWA
+Local controlled lab environment

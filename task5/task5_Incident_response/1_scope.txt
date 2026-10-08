@@ -1,0 +1,26 @@
+CAPSTONE PROJECT: DVWA WEB APPLICATION SECURITY ASSESSMENT
+
+Target:
+DVWA running locally on Kali Linux
+
+Scope:
+Controlled security testing of the DVWA web application.
+
+Testing Areas:
+SQL Injection
+Cross-Site Scripting (XSS)
+Cross-Site Request Forgery (CSRF)
+
+Tools:
+Kali Linux
+DVWA
+Burp Suite
+Browser
+
+Objective:
+Identify vulnerabilities, demonstrate their impact in the controlled
+lab environment, and document appropriate mitigation strategies.
+
+Authorization:
+Testing is performed only against the intentionally vulnerable
+DVWA application in the local lab environment.

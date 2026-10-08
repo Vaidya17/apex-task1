@@ -1,0 +1,24 @@
+INCIDENT RESPONSE - RECOVERY
+
+Incident:
+SQL Injection vulnerability identified in the DVWA application.
+
+Recovery Actions:
+The affected application is restored to a controlled and secure state
+after remediation of the identified vulnerability.
+
+Validation:
+The application is checked to confirm that normal functionality is
+available and that security controls are functioning as expected.
+
+Security Verification:
+The SQL Injection test is repeated after remediation to verify that
+malicious input is no longer interpreted as executable SQL.
+
+Monitoring:
+Application and Apache logs should be monitored for repeated malicious
+requests or signs of further exploitation.
+
+Status:
+The application is considered recovered after successful remediation
+and verification.

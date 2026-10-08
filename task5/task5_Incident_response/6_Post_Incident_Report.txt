@@ -1,0 +1,48 @@
+DVWA WEB APPLICATION SECURITY ASSESSMENT
+POST-INCIDENT REPORT
+
+1. INCIDENT SUMMARY
+
+A simulated SQL Injection attack was detected against the DVWA web
+application running in the local controlled laboratory environment.
+
+2. DETECTION
+
+Apache access logs recorded a request to the DVWA SQL Injection endpoint
+containing the payload:
+
+1' OR '1'='1
+
+Evidence:
+03_Incident_Detection_Logs.png
+
+3. CONTAINMENT
+
+The affected SQL Injection endpoint was isolated for the simulated
+incident-response exercise. The local source IP 127.0.0.1 was not blocked
+because it is required for access to the local DVWA environment.
+
+4. ERADICATION
+
+The root cause was identified as insecure processing of user-controlled
+input. The recommended remediation is to replace dynamic SQL construction
+with prepared statements and parameterized queries, together with
+appropriate input validation.
+
+5. RECOVERY
+
+The application is considered recovered after remediation and verification.
+The SQL Injection test should be repeated to confirm that malicious input
+is no longer interpreted as executable SQL. Application and Apache logs
+should continue to be monitored for further malicious activity.
+
+6. LESSONS LEARNED
+
+The incident demonstrates the importance of secure input handling,
+parameterized database queries, application monitoring, and logging for
+detecting and responding to web application attacks.
+
+7. FINAL STATUS
+
+Incident detected, contained, eradicated, and recovered in the controlled
+DVWA laboratory environment.
