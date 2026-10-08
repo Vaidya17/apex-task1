@@ -1,0 +1,238 @@
+APEXPLANET INTERNSHIP — TASK 5 NOTES
+DVWA WEB APPLICATION SECURITY ASSESSMENT
+
+These are my practical notes while working on Task 5. The testing was done on my
+local Kali Linux DVWA setup only.
+
+
+SETUP / BASIC INFO
+------------------
+
+Target: DVWA
+URL: http://127.0.0.1/DVWA/
+
+OS: Kali Linux
+Web server: Apache
+Browser: Firefox
+
+Main things used:
+- DVWA
+- Firefox
+- Apache access/error logs
+- Kali Linux terminal
+
+Testing was done locally, so the source IP seen in the logs was 127.0.0.1.
+
+
+SQL INJECTION
+-------------
+
+Started with the DVWA SQL Injection page and first tested a normal value.
+
+Normal input:
+1
+
+This was used as the baseline.
+
+Then tested:
+
+1' OR '1'='1
+
+This returned multiple records, showing that the input was being treated as part
+of the SQL query instead of just being treated as normal data.
+
+Also tested a UNION query:
+
+1' UNION SELECT user,password FROM users -- 
+
+This exposed usernames and password hashes from the DVWA database.
+
+What I observed:
+- Normal input returned the expected record.
+- Boolean-based SQLi returned multiple records.
+- UNION-based SQLi exposed database information.
+
+
+Main fix:
+Use prepared statements / parameterized queries instead of putting user input
+directly into SQL queries. Input validation should also be applied.
+
+
+STORED XSS
+----------
+
+Tested Stored XSS in DVWA.
+
+Payload used:
+
+<script>alert('XSS')</script>
+
+The payload was stored by the application and executed when the affected content
+was displayed again.
+
+Important point:
+Stored XSS is more persistent because the payload is saved by the application.
+Anyone who opens the affected content can potentially be affected.
+
+
+Main fixes:
+- Validate and sanitize input.
+- Encode output properly.
+- Use CSP where appropriate.
+
+
+REFLECTED XSS
+-------------
+
+Tested Reflected XSS using:
+
+<script>alert('XSS')</script>
+
+Here the input was reflected back by the application instead of being permanently
+stored.
+
+The JavaScript executed in the browser, confirming the vulnerability.
+
+Important point:
+The payload generally has to be delivered through a request or crafted URL, unlike
+Stored XSS where the malicious input remains stored in the application.
+
+Main fixes:
+- Validate input.
+- Use proper output encoding.
+- Avoid directly placing untrusted input into HTML/JavaScript.
+- CSP can provide an additional layer of protection.
+
+
+CSRF
+----
+
+Tested CSRF in DVWA while logged in.
+
+The test used a crafted request to trigger the password-change functionality.
+
+Result:
+The password-change operation was successfully triggered and DVWA showed
+"Password Changed."
+
+This showed that the state-changing request did not have sufficient CSRF protection.
+
+
+Main fixes:
+- Use unpredictable CSRF tokens.
+- Check the token on the server.
+- Use suitable SameSite cookie settings.
+- Protect sensitive state-changing actions.
+
+
+FINDINGS
+--------
+
+SQL Injection
+- Severity: High
+- Multiple records could be returned.
+- Usernames and password hashes could be exposed.
+
+Stored XSS
+- Severity: Medium
+- JavaScript was stored and executed.
+
+Reflected XSS
+- Severity: Medium
+- JavaScript was reflected and executed in the browser.
+
+CSRF
+- Severity: Medium
+- A crafted request could trigger a password change while the user was logged in.
+
+
+INCIDENT RESPONSE PRACTICAL
+---------------------------
+
+For the incident-response part, I used the SQL Injection activity as the
+simulated incident.
+
+Incident:
+SQL Injection request detected against DVWA.
+
+Checked Apache access logs with:
+
+sudo tail -n 30 /var/log/apache2/access.log
+
+Also checked:
+
+sudo tail -n 30 /var/log/apache2/error.log
+
+The error log did not contain useful SQLi-specific information, but the access log
+did show the request.
+
+Important log entry contained the SQLi request:
+
+GET /DVWA/vulnerabilities/sqli/?id=1%27+OR+%271%27%3D%271...
+
+This corresponds to:
+
+1' OR '1'='1
+
+Source:
+127.0.0.1
+
+Screenshot:
+07_Incident_Detection_Logs.png
+
+
+CONTAINMENT
+----------
+
+For the simulated response, the affected SQL Injection functionality was treated
+as isolated while the application was assessed.
+
+The source IP was not blocked because 127.0.0.1 is the local machine being used
+to access DVWA. Blocking it would stop access to the lab itself.
+
+
+ERADICATION
+-----------
+
+The root cause was the vulnerable handling of user input in the SQL query.
+
+The proper fix would be:
+- Replace dynamic SQL with prepared statements.
+- Use parameterized queries.
+- Validate input.
+- Check other database queries for similar problems.
+
+
+RECOVERY
+--------
+
+Recovery was treated as a simulated step.
+
+After applying the fix, the application should be tested again with the same SQLi
+payload to confirm that it no longer works.
+
+Logs should also be monitored after the fix to check for suspicious requests.
+
+
+POST-INCIDENT NOTES
+-------------------
+
+The SQL Injection request was successfully identified in the Apache access log.
+
+The response process followed:
+
+Detection
+   ↓
+Containment
+   ↓
+Eradication
+   ↓
+Recovery
+   ↓
+Post-incident review
+
+Main takeaway:
+Finding a vulnerability is only one part of security testing. The logs and incident
+response process are also important because they help identify what happened and
+support the response after an attack.
+
